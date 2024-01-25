@@ -53,6 +53,7 @@ const FormSchema = z.object({
       price: z.string().optional(),
     })
     .optional(),
+  
 });
 
 type Props = {
@@ -105,8 +106,8 @@ export default function ProfileForm({ Profile }: Props) {
           bio: Profile?.metadata?.bio || "",
           // @ts-ignore
           coverPicture:
-            // @ts-ignore
-            coverPicture || Profile?.metadata.coverPicture || "",
+          // @ts-ignore
+          coverPicture || Profile?.metadata.coverPicture || "",
           picture: profilePicture || "",
         });
 

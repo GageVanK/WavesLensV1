@@ -101,7 +101,6 @@ export default function Notifications() {
               <Tabs.List justify="center">
                 <Tabs.Tab
                   value="All"
-                  leftSection={<MdNotificationsNone style={iconStyle} />}
                 >
                   All
                 </Tabs.Tab>

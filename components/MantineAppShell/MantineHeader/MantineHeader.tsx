@@ -288,7 +288,7 @@ export function MantineHeader() {
                                     "_blank"
                                   )
                                 }
-                                leftSection={<Avatar src="https://pbs.twimg.com/profile_images/1654121403669680129/Ebc2fvyq_400x400.jpg" size={17} />}
+                                leftSection={<Avatar src="https://gw.ipfs-lens.dev/ipfs/Qmb4XppdMDCsS7KCL8nCJo8pukEWeqL4bTghURYwYiG83i/cropped_image.png" size={17} />}
                               >
                                 Lens Explorer
                               </Menu.Item>
@@ -301,7 +301,8 @@ export function MantineHeader() {
                           disconnect();
                         }}
                         disabled={isPending}
-                        leftSection={<IconLogout size={17} color="red" />}
+                        leftSection={<IconLogout size={17} />}
+                        color="red"
                       >
                         Sign Out
                       </Menu.Item>

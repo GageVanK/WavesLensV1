@@ -24,6 +24,15 @@ export const Chat = ({ handle }) => {
   const messagesRef = collection(db, "messages");
   const { data: session } = useSession();
   const viewport = useRef(null);
+
+   const [isAtBottom, setIsAtBottom] = useState(true); 
+
+  const checkScrollPosition = () => {
+    const { scrollTop, scrollHeight, clientHeight } = viewport.current;
+    const isBottom = scrollTop + clientHeight >= scrollHeight - 10; 
+
+    setIsAtBottom(isBottom);
+  };
   
   const scrollToBottom = () => {
     if (viewport.current) {
@@ -109,7 +118,7 @@ export const Chat = ({ handle }) => {
       </div>
       </ScrollArea>
        
-<Group justify="right" mb={11}>
+{isAtBottom && (<Group justify="right" mb={11}>
 <ActionIcon variant="light" size="md" radius="xl" 
       onClick={() => scrollToBottom()}
       style={{
@@ -120,7 +129,7 @@ export const Chat = ({ handle }) => {
       <BiSolidDownArrow />
     </ActionIcon>
 
-</Group>
+</Group>)}
         
 <Space h="sm"/>
 

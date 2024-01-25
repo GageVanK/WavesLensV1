@@ -59,7 +59,26 @@ export function Create() {
 
       console.log(result)
       if (result.isFailure()) {
-        // handle failure scenarios
+        switch (result.error.name) {
+          case 'BroadcastingError':
+            console.log('There was an error broadcasting the transaction', result.error.message);
+            break;
+
+          case 'PendingSigningRequestError':
+            console.log(
+              'There is a pending signing request in your wallet. ' +
+                'Approve it or discard it and try again.'
+            );
+            break;
+
+          case 'WalletConnectionError':
+            console.log('There was an error connecting to your wallet', result.error.message);
+            break;
+
+          case 'UserRejectedError':
+            // the user decided to not sign, usually this is silently ignored by UIs
+            break;
+        }
         return;
       }
 
@@ -130,7 +149,7 @@ export function Create() {
 
           <Space h="md" />
 
-          <Group justify="right">
+          <Group justify="left">
             <Button
               variant="gradient"
               gradient={{ from: "blue", to: "cyan", deg: 205 }}

@@ -57,6 +57,7 @@ import classes from "../styles/LaunchButton.module.css";
 import useUpload from "@/lib/useUpload";
 import { BsExclamationCircle } from "react-icons/bs";
 import { BrowserStream } from "@/components/BrowserStream";
+import { HowToOBS } from "@/components/HowToOBS";
 
 export const Stream = () => {
   const theme = useMantineTheme();
@@ -272,7 +273,7 @@ export const Stream = () => {
         <Space h="md" />
         <Tabs.Panel value="first">
           {" "}
-          <Space h="md" />
+         
           <Center>
             <Text fz="lg" fw={777} c="dimmed" truncate>
               Start Streaming
@@ -299,23 +300,7 @@ export const Stream = () => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <HoverCard width={280} closeDelay={700} shadow="md">
-                          <HoverCard.Target>
-                            <ActionIcon radius="xl" size="sm" variant="outline">
-                              <TiInfoLargeOutline />
-                            </ActionIcon>
-                          </HoverCard.Target>
-                          <HoverCard.Dropdown>
-                            <Text fw={500} size="xs">
-                              This is a one time use Stream Key.
-                            </Text>
-                            <Space h="xs" />
-                            <Text fw={500} size="xs">
-                              Paste in the Stream URL and Key to your Studio.
-                            </Text>
-                            <Space h="xs" />
-                          </HoverCard.Dropdown>
-                        </HoverCard>
+                        <HowToOBS />
                       </div>
                       <Space h="md" />
                       <Group justify="center">
@@ -449,22 +434,22 @@ export const Stream = () => {
                           </ActionIcon>
                         </HoverCard.Target>
                         <HoverCard.Dropdown>
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Broadcast your Stream to multiple platforms with
                             Multistreaming!
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Just paste in the necessary information and click
                             the Launch button.
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             It is recommended to have separate tabs open of your
                             Multistreams to ensure everything is working!
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Be sure to set the Stream Title, Category, etc in
                             the apps you are multistreaming to.
                           </Text>
@@ -636,16 +621,7 @@ export const Stream = () => {
                   </Group>
 
                   <Space h="md" />
-                  <Group justify="center">
-                    <Button
-                      fullWidth
-                      color="red"
-                      radius="xl"
-                      onClick={handleEndStream}
-                    >
-                      End Wave
-                    </Button>
-                  </Group>
+                 
                 </>
               ) : (
                 <Group justify="center">

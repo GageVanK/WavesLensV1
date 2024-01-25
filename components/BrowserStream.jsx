@@ -331,22 +331,22 @@ export const BrowserStream = () => {
                           </ActionIcon>
                         </HoverCard.Target>
                         <HoverCard.Dropdown>
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Broadcast your Stream to multiple platforms with
                             Multistreaming!
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Just paste in the necessary information and click
                             the Launch button.
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             It is recommended to have separate tabs open of your
                             Multistreams to ensure everything is working!
                           </Text>
                           <Space h="xs" />
-                          <Text fw={500} size="sm">
+                          <Text fw={500} size="xs">
                             Be sure to set the Stream Title, Category, etc in
                             the apps you are multistreaming to.
                           </Text>
@@ -519,16 +519,7 @@ export const BrowserStream = () => {
                   </Group>
 
                   <Space h="md" />
-                  <Group justify="center">
-                    <Button
-                      fullWidth
-                      color="red"
-                      radius="xl"
-                      onClick={handleEndStream}
-                    >
-                      End Wave
-                    </Button>
-                  </Group>
+                  
                 </>
               ) : (
                 <Group justify="center">

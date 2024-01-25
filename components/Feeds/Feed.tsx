@@ -123,7 +123,7 @@ export default function Feed() {
               <Paper shadow="xl" p="lg" withBorder>
                 <Center>
                   <Text size="md" fw={400}>
-                    You must have a Active Lens Profile.
+                    You must have an Active Lens Profile NFT.
                   </Text>
                 </Center>
                 <Space h="md" />

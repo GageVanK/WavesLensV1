@@ -15,7 +15,9 @@ import {
   PrimaryPublication,
   useNotInterestedToggle,
   useReportPublication,
-  ReportReason
+  ReportReason,
+  useWhoReactedToPublication,
+  useHidePublication
 } from "@lens-protocol/react-web";
 import { useRouter } from "next/router";
 import {
@@ -53,14 +55,18 @@ import { notifications } from "@mantine/notifications";
 import { GiMirrorMirror } from "react-icons/gi";
 import { Player } from "@livepeer/react";
 import { IconExclamationMark } from "@tabler/icons-react";
-import { FaComments } from "react-icons/fa6";
+import { FaComments, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { AudioPlayer } from 'react-audio-play';
 import { FaHeartBroken } from "react-icons/fa";
 import { useHover, useDisclosure } from '@mantine/hooks';
- import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
+import { IoTrashBin } from "react-icons/io5";
+
 import { MdHideImage, MdReport } from "react-icons/md";
+import { BiHide, BiSolidHide  } from "react-icons/bi";
+import { LuArrowUpRightSquare } from "react-icons/lu";
 
 type Props = {
   post: Post | Comment | Quote | Mirror;
@@ -79,7 +85,7 @@ export default function Post({ post }: Props) {
   const { execute: toggleNotInterested, error: NiError } = useNotInterestedToggle();
   const [reportType, setReportType] = useState<string | null>('');
   const [opened, { open, close }] = useDisclosure(false);
-
+  const { execute: hide, loading, error: HideError } = useHidePublication();
   // Either use the post, or if it has been decrypted, use the decrypted post
   const postToUse = useMemo(() => {
     return post;
@@ -176,6 +182,14 @@ export default function Post({ post }: Props) {
                     </Menu.Target>
 
                       <Menu.Dropdown >
+
+                           <Menu.Item onClick={() => {
+                    
+                            router.push(`/post/${post.id}`);
+                            }} 
+                    leftSection={<LuArrowUpRightSquare style={{ width: rem(17), height: rem(17) }} />}>
+                    Visit Post
+                  </Menu.Item>
                { // @ts-ignore
                postToUse?.operations?.hasBookmarked ? (
                   <Menu.Item onClick={() => {
@@ -199,7 +213,7 @@ export default function Post({ post }: Props) {
                   
                   
                   }} 
-                    leftSection={<IoBookmark style={{ width: rem(15), height: rem(15) }} />}>
+                    leftSection={<IoBookmark style={{ width: rem(17), height: rem(17)  }} />}>
                     Remove Bookmark
                   </Menu.Item>
                ):(
@@ -222,7 +236,7 @@ export default function Post({ post }: Props) {
 
                     }
                 }} 
-                  leftSection={<IoBookmarkOutline style={{ width: rem(15), height: rem(15) }} />}>
+                  leftSection={<IoBookmarkOutline style={{ width: rem(17), height: rem(17)  }} />}>
                     Bookmark
                   </Menu.Item>
                )}
@@ -248,8 +262,8 @@ export default function Post({ post }: Props) {
 
                     }
                   }} 
-                  leftSection={<MdHideImage style={{ width: rem(15), height: rem(15) }} />}>
-                    Undo Not Interested
+                  leftSection={<BiSolidHide  style={{ width: rem(17), height: rem(17)  }} />}>
+                    Undo
                   </Menu.Item>
                ):(
                   <Menu.Item onClick={() => {
@@ -271,9 +285,40 @@ export default function Post({ post }: Props) {
 
                     }
                   }} 
-                  leftSection={<MdHideImage style={{ width: rem(15), height: rem(15) }} />}>
+                  leftSection={<BiHide style={{ width: rem(17), height: rem(17)  }} />}>
                     Not Interested
                   </Menu.Item>
+               )}
+               {session?.authenticated && session?.type === "WITH_PROFILE" && session.profile?.handle?.localName === postContent.by?.handle?.localName && (
+                <>
+                  <Menu.Divider />
+                  <Menu.Item onClick={() => {
+                    hide({publication: postToUse as AnyPublication})
+                    if (!HideError) {
+                      notifications.show({
+                        title: "Success",
+                        icon: <IconCheck size="1.1rem" />,
+                        color: "green",
+                        message: "Post Deleted!",
+                      }); 
+                    } else {
+                    notifications.show({
+                      title: "Error",
+                      icon: <IconX size="1.1rem" />,
+                      color: "red",
+                      message: "Something Happened!",
+                    }); 
+
+                    }
+                  }} 
+                  color="red"
+                  leftSection={<IoTrashBin style={{ width: rem(17), height: rem(17)  }} />}
+                  
+                  >
+                    Delete
+                  </Menu.Item>
+
+                </>
                )}
 
               </Menu.Dropdown>
@@ -383,26 +428,7 @@ export default function Post({ post }: Props) {
         <Space h="xl" />
 
         <Center>
-          <Spoiler
-            maxHeight={222}
-            showLabel={
-              <>
-                <Space h="xs" />
-                <Tooltip label="Show More">
-                  <IconScriptPlus />
-                </Tooltip>
-              </>
-            }
-            hideLabel={
-              <>
-                <Space h="xs" />
-                <Tooltip label="Show Less">
-                  <IconScriptMinus />
-                </Tooltip>
-              </>
-            }
-          >
-              {/* Post content */}
+       
               <Text
                 size="md"
                 style={{
@@ -425,7 +451,7 @@ export default function Post({ post }: Props) {
                       : "",
                 }}
               />
-          </Spoiler>
+       
         </Center>
         <Space h="md" />
 
@@ -488,8 +514,8 @@ export default function Post({ post }: Props) {
                 radius="xs"
                 mt={22}
                 style={{
-                  width: "100%", // Width is 100% of the container
-                  maxWidth: "100%", // Ensures the image doesn't scale beyond its original size
+                  width: "100%",
+                  maxWidth: "100%",
                   maxHeight: "888px",
                 }}
                 alt={`${postToUse.by?.handle?.localName}'s Post Image`}
@@ -632,25 +658,7 @@ export default function Post({ post }: Props) {
             <Space h="xl" />
 
             <Center>
-              <Spoiler
-                maxHeight={222}
-                showLabel={
-                  <>
-                    <Space h="xs" />
-                    <Tooltip label="Show More">
-                      <IconScriptPlus />
-                    </Tooltip>
-                  </>
-                }
-                hideLabel={
-                  <>
-                    <Space h="xs" />
-                    <Tooltip label="Show Less">
-                      <IconScriptMinus />
-                    </Tooltip>
-                  </>
-                }
-              >
+           
                 <div
                   style={{
                     maxWidth: "100%", // Adjust this value to control the maximum width
@@ -681,7 +689,7 @@ export default function Post({ post }: Props) {
                     }}
                   />
                 </div>
-              </Spoiler>
+            
             </Center>
             <Space h="md" />
             {

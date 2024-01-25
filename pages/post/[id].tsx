@@ -206,7 +206,7 @@ const PostPage = () => {
         <Group justify="left">
           <Avatar
             // @ts-ignore
-            src={session?.profile?.metadata?.picture.optimized.uri || "https://gw.ipfs-lens.dev/ipfs/bafybeidkewnnnisaqmwk7ornt6fymjddlkhlou2tsfhaxxnird4w4yrebe"}
+            src={session?.data?.profile?.metadata?.picture?.optimized?.uri || "https://gw.ipfs-lens.dev/ipfs/bafybeidkewnnnisaqmwk7ornt6fymjddlkhlou2tsfhaxxnird4w4yrebe"}
             size="lg"
             radius="xl"
           />
@@ -214,7 +214,7 @@ const PostPage = () => {
           <Text fw={500} size="lg">
             {
               // @ts-ignore
-              session?.data?.profile?.handle?.localName || "Anon"
+              session.data?.profile?.metadata?.displayName || session?.data?.profile?.handle?.localName || "Anon"
             }
           </Text>
         </Group>
