@@ -187,8 +187,8 @@ const ProfilePage = () => {
           {"wavestv" === profile?.data?.handle?.localName && (
             <Paper>
               <Player 
-              playbackId="f233fkk7ul7av63z" 
-              title="pp poopoo" 
+                playbackId="eec2cm2x67izguk1" 
+            title="Lens Community Call: Opening Up the Garden" 
             
               priority 
               controls={{ autohide: 0, hotkeys: false, defaultVolume: 0.6 }}
