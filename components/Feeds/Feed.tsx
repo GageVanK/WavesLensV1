@@ -87,8 +87,8 @@ export default function Feed() {
             </Center>
             <Space h="md" />
             <Player 
-            playbackId="eec2cm2x67izguk1" 
-            title="Lens Community Call: Opening Up the Garden" 
+            playbackId="d291umr3q5e8f2q2" 
+            title="shitter shits" 
     
             priority 
             
